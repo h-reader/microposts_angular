@@ -4,8 +4,8 @@
     <form [formGroup]="form" class="basic-form">
       <md-form-field class="full-width-controll">
         <input type="email" mdInput placeholder="メースアドレス" formControlName="email" >
-        <md-error *ngIf="form.controls.email.hasError('required')">
-          Please enter a valid email address
+        <md-error>
+          {{formErrors}}
         </md-error>
       <!--
         <md-error *ngIf="email.hasError('required')">

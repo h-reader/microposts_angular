@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 
 import { BaseComponent } from '../base/base.component';
+import { ValidationService } from '../common/validation/validation.service';
 
 @Component({
   selector: 'app-login',
@@ -10,35 +11,33 @@ import { BaseComponent } from '../base/base.component';
 })
 export class LoginComponent extends BaseComponent implements OnInit {
 
-  constructor(private fb: FormBuilder) {
-    super();
-    this.createForm();
+  constructor(private fb: FormBuilder, service: ValidationService) {
+    super(service);
   }
 
   ngOnInit() {
-
+    this.buildForms();
+    super.buildForms();
   }
 
-  private createForm() {
+  buildForms() {
     this.form = this.fb.group( {
       email: [ null, [Validators.required, Validators.email] ],
       password: [ null, [Validators.required, Validators.minLength(8)] ],
     });
-
-    this.validation = {
-      email: {
-        required: "メールアドレスを入力してください",
-        email: "メールアドレスが正しく入力されていません"
-      }, 
-      password: {
-        required: "パスワードを入力してください",
-        minLength: "パスワードは８文字以上入力してください"
-      }
-    };
   }
+
+  emitErrorAction(field: any) {
+    /* エラー発生時処理、継承先で実装 */
+    console.log('aa');
+    console.log(this.formErrors);
+  }
+
 
   private login() {
     
+    //this.validControlError('email');
+/*
     if(this.form.controls.email.errors) {
       console.log(this.form.controls.email.errors);
       console.log(this.form.controls.email.errors[0]);
@@ -47,5 +46,6 @@ export class LoginComponent extends BaseComponent implements OnInit {
 
     alert(this.form.status);
     console.log(this.form);
+    */
   }
 }
