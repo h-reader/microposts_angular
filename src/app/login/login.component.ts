@@ -3,6 +3,8 @@ import { FormBuilder, Validators } from '@angular/forms';
 
 import { BaseComponent } from '../base/base.component';
 import { ValidationService } from '../common/validation/validation.service';
+import { AuthService } from '../common/auth/auth.service';
+import { User } from '../user/user';
 
 @Component({
   selector: 'app-login',
@@ -11,8 +13,8 @@ import { ValidationService } from '../common/validation/validation.service';
 })
 export class LoginComponent extends BaseComponent implements OnInit {
 
-  constructor(private fb: FormBuilder, service: ValidationService) {
-    super(service);
+  constructor(private fb: FormBuilder, validService: ValidationService, private authService: AuthService) {
+    super(validService);
   }
 
   ngOnInit() {
@@ -38,14 +40,20 @@ export class LoginComponent extends BaseComponent implements OnInit {
     });
   }
 
-  emitErrorAction(field: any) {
-    /* エラー発生時処理、継承先で実装 */
-    console.log('aa');
-    console.log(this.formErrors);
-  }
-
 
   private login() {
+
+    if(this.form.valid) {
+      const body = JSON.stringify({
+        'email': this.form.controls.email.value,
+        'password': this.form.controls.password.value
+      });
+      this.authService.logIn(body).then((user: User) => {
+        console.log(user);
+      }).catch((res: any) => {
+        console.log("エラー");      
+      });
+    }
     
     //this.validControlError('email');
 /*
