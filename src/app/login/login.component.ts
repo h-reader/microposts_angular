@@ -25,6 +25,17 @@ export class LoginComponent extends BaseComponent implements OnInit {
       email: [ null, [Validators.required, Validators.email] ],
       password: [ null, [Validators.required, Validators.minLength(8)] ],
     });
+
+    this.setValidateErrorConfig({
+      "email": {
+        required: { name: "メールアドレス" },
+        email: { name: "メールアドレス"},
+      },
+      "password": {
+        required: { name: "パスワード" },
+        minlength: { name: "パスワード", min: "8" }
+      }
+    });
   }
 
   emitErrorAction(field: any) {

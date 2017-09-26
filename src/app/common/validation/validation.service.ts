@@ -9,7 +9,7 @@ export class ValidationService {
     let config = {
         'required': '値を入力して下さい',
         'email': '正しいメールアドレスを入力してください',
-        'minlength': `${validatorValue.requiredLength} 文字以上入力してください`
+        'minlength': `${validatorValue.min} 文字以上入力してください`
     };
 
     return config[validatorName];

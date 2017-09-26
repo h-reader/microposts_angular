@@ -1,11 +1,25 @@
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 import { ValidationService } from '../common/validation/validation.service';
+
+/**
+ * バリデーション時のエラーメッセージ情報
+ * [key: string → フィールド名]: {
+ *   [key: string → バリデーションキー] : 
+ *     { [key: string → メッセージキー]: string → エラーメッセージ }
+ * }
+ */
+interface ValidateErrorConfig {
+  [key: string]: {
+    [key: string]: { [key: string]: string }
+  };
+}
 
 export abstract class BaseComponent {
 
   form: FormGroup;
-  formErrors: Map<string, string>;
+  errorConfig: ValidateErrorConfig;
+  formErrors: {};
 
   constructor(private validService: ValidationService) { }
 
@@ -13,25 +27,28 @@ export abstract class BaseComponent {
     this.form.valueChanges.subscribe(data => {
       this.onValueChange(data);
     });
-    this.formErrors = new Map<string, string>();
-    for (const control in this.form.controls) {
-      this.formErrors.set(control, '');
-    }
-}
+
+    this.onValueChange();
+  }
 
   onValueChange(data?: any) {
+    this.formErrors = {}; 
+
     for(const field in this.form.controls) {
       const control = this.form.get(field);
-      this.formErrors.set(field, ''); 
+      this.formErrors[field] = '';
       if (control && control.dirty && !control.valid) {
           for (const key in control.errors){
-            this.formErrors.set(field, this.validService.getValidatorErrorMessage(key, field));
+
+            if(this.formErrors[field] == '') {
+              this.formErrors[field] += 
+              this.validService.getValidatorErrorMessage(key, this.errorConfig[field][key]);
+            }
           }
           this.emitErrorAction(field);
+
       }
-        if (control && control.dirty && control.valid) {
-            this.emitNotErrorAction(field);
-        }
+      this.emitNotErrorAction(field);      
     }
   }
 
@@ -41,6 +58,10 @@ export abstract class BaseComponent {
 
   emitNotErrorAction(field: any){
     /* エラー未発生時処理、継承先で実装 */
+  }
+
+  setValidateErrorConfig(config: ValidateErrorConfig) {
+    this.errorConfig = config;
   }
 
 
