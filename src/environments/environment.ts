@@ -5,5 +5,6 @@
 
 export const environment = {
   production: false,
-  API_URL:  "localhost:4200/api"
+  APP_TITLE: 'Login App',
+  API_URL:  'localhost:3000/api"',
 };

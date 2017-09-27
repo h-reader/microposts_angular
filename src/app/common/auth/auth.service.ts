@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import {Http, Headers, RequestOptions} from '@angular/http';
 import 'rxjs/Rx';
 
-import { environment } from '../../../environments/environment'
+import { environment } from '../../../environments/environment';
 import { User } from '../../user/user'
 
 
