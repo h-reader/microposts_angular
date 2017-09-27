@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { Router } from "@angular/router";
 
 import { BaseComponent } from '../base/base.component';
 import { ValidationService } from '../common/validation/validation.service';
@@ -13,7 +14,10 @@ import { User } from '../user/user';
 })
 export class LoginComponent extends BaseComponent implements OnInit {
 
-  constructor(private fb: FormBuilder, validService: ValidationService, private authService: AuthService) {
+  constructor(private fb: FormBuilder, 
+    validService: ValidationService, 
+    private authService: AuthService,
+    private router: Router) {
     super(validService);
   }
 
@@ -44,27 +48,21 @@ export class LoginComponent extends BaseComponent implements OnInit {
   private login() {
 
     if(this.form.valid) {
+
       const body = JSON.stringify({
         'email': this.form.controls.email.value,
         'password': this.form.controls.password.value
       });
       this.authService.logIn(body).then((user: User) => {
         console.log(user);
+        this.router.navigate(['/home']);        
       }).catch((res: any) => {
         console.log("エラー");      
       });
-    }
-    
-    //this.validControlError('email');
-/*
-    if(this.form.controls.email.errors) {
-      console.log(this.form.controls.email.errors);
-      console.log(this.form.controls.email.errors[0]);
-      console.log(this.form.controls.email.validator);
+
+    } else {
+      console.log('ログインエラー');
     }
 
-    alert(this.form.status);
-    console.log(this.form);
-    */
   }
 }
