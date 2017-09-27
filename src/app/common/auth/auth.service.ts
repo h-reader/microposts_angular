@@ -15,7 +15,10 @@ export class AuthService {
     let headers = new Headers({'Content-Type': 'application/json'});
     let options = new RequestOptions({headers: headers});
     return this.http.post(environment.API_URL + '/auth/sign_in', body, options)
-    .toPromise().then(response => {response.json().data as User})
+    .toPromise().then(response => {
+      
+      return response.json().data as User;
+    })
     .catch(this.handleError);
   }
 
