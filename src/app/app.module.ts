@@ -10,7 +10,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
 import { LoginComponent } from './login/login.component';
-import { AuthService } from './common/auth/auth.service'
+import { AuthService } from './common/auth/auth.service';
 import { ValidationService } from './common/validation/validation.service';
 import { HomeComponent } from './home/home.component';
 

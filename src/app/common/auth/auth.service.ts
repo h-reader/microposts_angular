@@ -3,7 +3,7 @@ import {Http, Headers, RequestOptions} from '@angular/http';
 import 'rxjs/Rx';
 
 import { environment } from '../../../environments/environment';
-import { User } from '../../user/user'
+import { User } from '../../user/user';
 
 
 @Injectable()
@@ -12,11 +12,11 @@ export class AuthService {
   constructor(private http: Http) { }
 
   logIn(body: any): Promise<User> {
-    let headers = new Headers({'Content-Type': 'application/json'});
-    let options = new RequestOptions({headers: headers});
+    const headers = new Headers({'Content-Type': 'application/json'});
+    const options = new RequestOptions({headers: headers});
     return this.http.post(environment.API_URL + '/auth/sign_in', body, options)
     .toPromise().then(response => {
-      
+
       return response.json().data as User;
     })
     .catch(this.handleError);

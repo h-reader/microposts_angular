@@ -5,7 +5,7 @@ import { ValidationService } from '../common/validation/validation.service';
 /**
  * バリデーション時のエラーメッセージ情報
  * [key: string → フィールド名]: {
- *   [key: string → バリデーションキー] : 
+ *   [key: string → バリデーションキー] :
  *     { [key: string → メッセージキー]: string → エラーメッセージ }
  * }
  */
@@ -32,23 +32,27 @@ export abstract class BaseComponent {
   }
 
   onValueChange(data?: any) {
-    this.formErrors = {}; 
+    this.formErrors = {};
 
-    for(const field in this.form.controls) {
-      const control = this.form.get(field);
-      this.formErrors[field] = '';
-      if (control && control.dirty && !control.valid) {
-          for (const key in control.errors){
+    for (const field in this.form.controls) {
+      if (this.form.controls.hasOwnProperty(field)) {
 
-            if(this.formErrors[field] == '') {
-              this.formErrors[field] += 
-              this.validService.getValidatorErrorMessage(key, this.errorConfig[field][key]);
+        const control = this.form.get(field);
+        this.formErrors[field] = '';
+        if (control && control.dirty && !control.valid) {
+            for (const key in control.errors) {
+
+              if (this.formErrors[field] === '') {
+                this.formErrors[field] +=
+                this.validService.getValidatorErrorMessage(key, this.errorConfig[field][key]);
+              }
             }
-          }
-          this.emitErrorAction(field);
+            this.emitErrorAction(field);
+
+        }
+        this.emitNotErrorAction(field);
 
       }
-      this.emitNotErrorAction(field);      
     }
   }
 
@@ -56,7 +60,7 @@ export abstract class BaseComponent {
     /* エラー発生時処理、継承先で実装 */
   }
 
-  emitNotErrorAction(field: any){
+  emitNotErrorAction(field: any) {
     /* エラー未発生時処理、継承先で実装 */
   }
 

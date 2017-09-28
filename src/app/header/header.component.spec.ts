@@ -20,6 +20,6 @@ describe('HeaderComponent', () => {
   });
 
   it('should be created', () => {
-    //expect(component).toBeTruthy();
+    // expect(component).toBeTruthy();
   });
 });

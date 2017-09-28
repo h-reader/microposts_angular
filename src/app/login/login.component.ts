@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { Router } from "@angular/router";
+import { Router } from '@angular/router';
 
 import { BaseComponent } from '../base/base.component';
 import { ValidationService } from '../common/validation/validation.service';
@@ -14,8 +14,10 @@ import { User } from '../user/user';
 })
 export class LoginComponent extends BaseComponent implements OnInit {
 
-  constructor(private fb: FormBuilder, 
-    validService: ValidationService, 
+  formErrors: {};
+
+  constructor(private fb: FormBuilder,
+    validService: ValidationService,
     private authService: AuthService,
     private router: Router) {
     super(validService);
@@ -33,21 +35,21 @@ export class LoginComponent extends BaseComponent implements OnInit {
     });
 
     this.setValidateErrorConfig({
-      "email": {
-        required: { name: "メールアドレス" },
-        email: { name: "メールアドレス"},
+      'email': {
+        required: { name: 'メールアドレス' },
+        email: { name: 'メールアドレス'},
       },
-      "password": {
-        required: { name: "パスワード" },
-        minlength: { name: "パスワード", min: "8" }
+      'password': {
+        required: { name: 'パスワード' },
+        minlength: { name: 'パスワード', min: '8' }
       }
     });
   }
 
 
-  private login() {
+  login() {
 
-    if(this.form.valid) {
+    if (this.form.valid) {
 
       const body = JSON.stringify({
         'email': this.form.controls.email.value,
@@ -55,9 +57,9 @@ export class LoginComponent extends BaseComponent implements OnInit {
       });
       this.authService.logIn(body).then((user: User) => {
         console.log(user);
-        this.router.navigate(['/home']);        
+        this.router.navigate(['/home']);
       }).catch((res: any) => {
-        console.log("エラー");      
+        console.log('エラー');
       });
 
     } else {
