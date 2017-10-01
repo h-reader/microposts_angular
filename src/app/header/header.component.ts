@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+
+import { AuthService } from '../common/auth/auth.service';
 import { environment } from '../../environments/environment';
 
 @Component({
@@ -9,11 +12,26 @@ import { environment } from '../../environments/environment';
 export class HeaderComponent implements OnInit {
 
   /** ヘッダタイトル名 */
-  headerTitle = environment.APP_TITLE;
+  headerTitle: string = environment.APP_TITLE;
 
-  constructor() { }
+  constructor(private authService: AuthService, private router: Router) { }
 
   ngOnInit() {
   }
 
+  isLogin(): boolean {
+    return this.authService.isLogin();
+  }
+
+  login() {
+    this.router.navigate(['/login']);
+  }
+
+  /**
+   * ログアウトする
+   */
+  logout() {
+    this.authService.logout();
+    this.router.navigate(['/login']);
+  }
 }

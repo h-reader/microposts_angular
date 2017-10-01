@@ -1,6 +1,13 @@
 <md-toolbar color="primary">
   <a class="header-title" routerLink=".">{{ headerTitle }}</a>
   <span class="remaining-space"></span>
-  <a md-button routerLink=".">Login</a>
-  <a md-button routerLink="."><md-icon class="icon">settings</md-icon></a>
+  <ng-container *ngIf="isLogin() == false">
+    <a md-button routerLink=".">Login</a>
+  </ng-container>
+
+  <ng-container *ngIf="isLogin() == true">
+    <a md-button (click)="logout()" >Logout</a>
+    <a md-button routerLink="."><md-icon class="icon">settings</md-icon></a>
+  </ng-container>
+
 </md-toolbar>

@@ -14,6 +14,7 @@ import { User } from '../user/user';
 })
 export class LoginComponent extends BaseComponent implements OnInit {
 
+  form;
   formErrors: {};
 
   constructor(private fb: FormBuilder,
@@ -36,17 +37,19 @@ export class LoginComponent extends BaseComponent implements OnInit {
 
     this.setValidateErrorConfig({
       'email': {
-        required: { name: 'メールアドレス' },
-        email: { name: 'メールアドレス'},
+        required: {},
+        email: {},
       },
       'password': {
-        required: { name: 'パスワード' },
-        minlength: { name: 'パスワード', min: '8' }
+        required: {},
+        minlength: { min: '8' }
       }
     });
   }
 
-
+  /**
+   * ログイン
+   */
   login() {
 
     if (this.form.valid) {
@@ -62,8 +65,6 @@ export class LoginComponent extends BaseComponent implements OnInit {
         console.log('エラー');
       });
 
-    } else {
-      console.log('ログインエラー');
     }
 
   }

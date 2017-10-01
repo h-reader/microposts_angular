@@ -28,10 +28,14 @@ export abstract class BaseComponent {
       this.onValueChange(data);
     });
 
-    this.onValueChange();
+    this.validate();
   }
 
   onValueChange(data?: any) {
+    this.validate();
+  }
+
+  validate() {
     this.formErrors = {};
 
     for (const field in this.form.controls) {
