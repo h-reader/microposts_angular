@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { Injector, NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from '@angular/material';
 import { BrowserModule } from '@angular/platform-browser';
@@ -10,9 +10,10 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
 import { LoginComponent } from './login/login.component';
+import { HomeComponent } from './home/home.component';
 import { AuthService } from './common/auth/auth.service';
 import { ValidationService } from './common/validation/validation.service';
-import { HomeComponent } from './home/home.component';
+import { ServiceLocator } from './common/service-locator';
 
 @NgModule({
   declarations: [
@@ -35,4 +36,8 @@ import { HomeComponent } from './home/home.component';
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+  constructor(private injector: Injector) {
+    ServiceLocator.injector = this.injector;
+  }
+ }

@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
 
 import { BaseComponent } from '../base/base.component';
-import { ValidationService } from '../common/validation/validation.service';
 import { AuthService } from '../common/auth/auth.service';
 import { User } from '../user/user';
 
@@ -18,10 +16,8 @@ export class LoginComponent extends BaseComponent implements OnInit {
   formErrors: {};
 
   constructor(private fb: FormBuilder,
-    validService: ValidationService,
-    private authService: AuthService,
-    private router: Router) {
-    super(validService);
+    private authService: AuthService) {
+    super();
   }
 
   ngOnInit() {
@@ -60,7 +56,7 @@ export class LoginComponent extends BaseComponent implements OnInit {
       });
       this.authService.logIn(body).then((user: User) => {
         console.log(user);
-        this.router.navigate(['/home']);
+        this.routerNavigate(['/home']);
       }).catch((res: any) => {
         console.log('エラー');
       });
@@ -68,4 +64,6 @@ export class LoginComponent extends BaseComponent implements OnInit {
     }
 
   }
+  
+
 }

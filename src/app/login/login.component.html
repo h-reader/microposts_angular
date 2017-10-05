@@ -2,7 +2,7 @@
   <md-card-title>ログイン</md-card-title>
   <md-card-content>
     <form [formGroup]="form">
-      <md-form-field class="full-width-controll">
+      <md-form-field>
         <input type="email" mdInput placeholder="メースアドレス" formControlName="email" >
         <md-error *ngIf="formErrors.email">
           {{ formErrors.email }}
