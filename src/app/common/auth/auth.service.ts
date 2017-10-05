@@ -11,14 +11,18 @@ import { HttpBase } from '../../base/http-base';
 @Injectable()
 export class AuthService {
 
+  private ACESS_TOKEN_KEY: string = 'access-token';
+  private UID_KEY: string = 'uid';
+  private CLIENT_KEY: string = 'client';
+  
   constructor(@Inject(PLATFORM_ID) private platformId: Object, private http: Http) {}
 
-      /**
+  /**
    * ローカルストレージに保存してあるtoken情報を取得する
    */
   getToken() {
     if (isPlatformBrowser(this.platformId)) {
-      return localStorage.getItem('access-token');
+      return localStorage.getItem(this.ACESS_TOKEN_KEY);
     } else {
       return null;
     }
@@ -29,7 +33,7 @@ export class AuthService {
    */
   getUid() {
     if (isPlatformBrowser(this.platformId) && localStorage.getItem('uid')) {
-      return localStorage.getItem('uid');
+      return localStorage.getItem(this.UID_KEY);
     } else {
       return null;
     }
@@ -40,7 +44,7 @@ export class AuthService {
    */
   getClient() {
     if (isPlatformBrowser(this.platformId)) {
-      return localStorage.getItem('client');
+      return localStorage.getItem(this.CLIENT_KEY);
     } else {
       return null;
     }
@@ -52,8 +56,7 @@ export class AuthService {
    */
   setToken(token: string) {
     if (isPlatformBrowser(this.platformId) && token) {
-      localStorage.setItem('access-token', token);
-      console.log(this.getToken());
+      localStorage.setItem(this.ACESS_TOKEN_KEY, token);
     }
   }
 
@@ -63,8 +66,7 @@ export class AuthService {
    */
   setUid(uid: string) {
     if (isPlatformBrowser(this.platformId) && uid) {
-      localStorage.setItem('uid', uid);
-      console.log(this.getUid());
+      localStorage.setItem(this.UID_KEY, uid);
     }
   }
 
@@ -74,8 +76,7 @@ export class AuthService {
    */
   setClient(client: string) {
     if (isPlatformBrowser(this.platformId) && client) {
-      localStorage.setItem('client', client);
-      console.log(this.getClient());
+      localStorage.setItem(this.CLIENT_KEY, client);
     }
   }
 
@@ -95,14 +96,13 @@ export class AuthService {
     const options = new RequestOptions({headers: headers});
     return this.http.post(environment.API_URL + '/auth/sign_in', body, options)
     .toPromise().then(response => {
-      console.log('status: ' + response.status);
-      console.log('response : ↓');
-      console.log(response);
-      
       // 認証情報を保存
       this.setToken(response.headers.get('access-token'));
       this.setUid(response.headers.get('uid'));
       this.setClient(response.headers.get('client'));
+
+      this.printAuthInfo();
+      
       // ユーザ情報を返却
       return response.json().data as User;
     })
@@ -113,14 +113,25 @@ export class AuthService {
    * ログアウトする
    */
   logout() {
-    this.setToken(null);
-    this.setUid(null);
-    this.setClient(null);
+    this.clearAuthInfo();
+    this.printAuthInfo();
+  }
+
+  private clearAuthInfo() {
+    localStorage.removeItem(this.ACESS_TOKEN_KEY);
+    localStorage.removeItem(this.UID_KEY);
+    localStorage.removeItem(this.CLIENT_KEY);
   }
 
   private handleError(error: any): Promise<any> {
     console.error('An error occurred', error); // for demo purposes only
     return Promise.reject(error.message || error);
+  }
+
+  private printAuthInfo() {
+    console.log("token : " + this.getToken());
+    console.log("uid : " + this.getUid());
+    console.log("client : " + this.getClient());
   }
 
 }
