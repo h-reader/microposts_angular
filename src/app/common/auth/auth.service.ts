@@ -5,8 +5,6 @@ import 'rxjs/Rx';
 
 import { environment } from '../../../environments/environment';
 import { User } from '../../user/user';
-import { HttpBase } from '../../base/http-base';
-
 
 @Injectable()
 export class AuthService {
