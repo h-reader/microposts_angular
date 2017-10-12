@@ -1,22 +1,25 @@
-<md-card>
-  <md-card-title>ログイン</md-card-title>
-  <md-card-content>
+<mat-card>
+  <mat-card-title>ログイン</mat-card-title>
+  <mat-card-content>
     <form [formGroup]="form">
-      <md-form-field>
-        <input type="email" mdInput placeholder="メースアドレス" formControlName="email" >
-        <md-error *ngIf="formErrors.email">
+      <mat-form-field>
+        <input type="email" matInput placeholder="メースアドレス" formControlName="email" >
+        <mat-error *ngIf="formErrors.email">
           {{ formErrors.email }}
-        </md-error>
-      </md-form-field>
+        </mat-error>
+      </mat-form-field>
       <br>
-      <md-form-field>
-          <input type="password" mdInput placeholder="パスワード" formControlName="password">
-          <md-error *ngIf="formErrors.password">
+      <mat-form-field>
+          <input type="password" matInput placeholder="パスワード" formControlName="password">
+          <mat-error *ngIf="formErrors.password">
             {{ formErrors.password }}
-          </md-error>
-      </md-form-field>
+          </mat-error>
+      </mat-form-field>
       <br>
-      <button md-raised-button color="primary" (click)="login();" >ログイン</button>
+      <button mat-raised-button color="primary" (click)="login();" >ログイン</button>
+      <mat-error *ngIf="isLoginError">
+        メースアドレス、またはパスワードが違います。
+      </mat-error>
     </form>
-  </md-card-content>
-</md-card>
+  </mat-card-content>
+</mat-card>

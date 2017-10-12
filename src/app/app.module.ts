@@ -1,6 +1,6 @@
 import { Injector, NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-import { MaterialModule } from '@angular/material';
+import { MATERIAL_COMPATIBILITY_MODE, MatInputModule, MatButtonModule, MatIconModule, MatToolbarModule, MatCardModule } from '@angular/material';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpModule } from '@angular/http';
@@ -20,19 +20,24 @@ import { ServiceLocator } from './common/service-locator';
     AppComponent,
     HeaderComponent,
     LoginComponent,
-    HomeComponent
+    HomeComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
-    MaterialModule,
     BrowserAnimationsModule,
-    HttpModule
+    HttpModule,
+    MatInputModule,
+    MatButtonModule,
+    MatIconModule,
+    MatToolbarModule,
+    MatCardModule,
   ],
   providers: [
     AuthService,
     ValidationService,
+    { provide: MATERIAL_COMPATIBILITY_MODE, useValue: true },    
   ],
   bootstrap: [AppComponent]
 })

@@ -14,6 +14,7 @@ export class LoginComponent extends BaseComponent implements OnInit {
 
   form;
   formErrors: {};
+  isLoginError: boolean;
 
   constructor(private fb: FormBuilder,
     private authService: AuthService) {
@@ -23,6 +24,7 @@ export class LoginComponent extends BaseComponent implements OnInit {
   ngOnInit() {
     this.buildForms();
     super.buildForms();
+    this.isLoginError = false;
   }
 
   buildForms() {
@@ -56,8 +58,10 @@ export class LoginComponent extends BaseComponent implements OnInit {
       });
       this.authService.logIn(body).then((user: User) => {
         console.log(user);
+        this.isLoginError = false;
         this.routerNavigate(['/home']);
       }).catch((res: any) => {
+        this.isLoginError = true;
         console.log('エラー');
       });
 
