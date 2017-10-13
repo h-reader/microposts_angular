@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { Validators } from '@angular/forms';
 
 import { BaseComponent } from '../base/base.component';
 import { AuthService } from '../common/auth/auth.service';
+import { Router } from '@angular/router';
 import { User } from '../user/user';
 
 @Component({
@@ -10,64 +11,38 @@ import { User } from '../user/user';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent extends BaseComponent implements OnInit {
+export class LoginComponent implements OnInit {
 
-  form;
-  formErrors: {};
+  /** ログインの失敗字にTrue */
   isLoginError: boolean;
 
-  constructor(private fb: FormBuilder,
-    private authService: AuthService) {
-    super();
+  constructor(private authService: AuthService, private router: Router) {
   }
 
   ngOnInit() {
-    this.buildForms();
-    super.buildForms();
     this.isLoginError = false;
-  }
-
-  buildForms() {
-    this.form = this.fb.group( {
-      email: [ null, [Validators.required, Validators.email] ],
-      password: [ null, [Validators.required, Validators.minLength(8)] ],
-    });
-
-    this.setValidateErrorConfig({
-      'email': {
-        required: {},
-        email: {},
-      },
-      'password': {
-        required: {},
-        minlength: { min: '8' }
-      }
-    });
   }
 
   /**
    * ログイン
    */
-  login() {
+  login(values: any) {
 
-    if (this.form.valid) {
+    const body = JSON.stringify({
+      'email': values.email,
+      'password': values.password
+    });
 
-      const body = JSON.stringify({
-        'email': this.form.controls.email.value,
-        'password': this.form.controls.password.value
-      });
-      this.authService.logIn(body).then((user: User) => {
-        console.log(user);
-        this.isLoginError = false;
-        this.routerNavigate(['/home']);
-      }).catch((res: any) => {
-        this.isLoginError = true;
-        console.log('エラー');
-      });
-
-    }
+    // ログイン処理呼び出し
+    this.authService.logIn(body).then((user: User) => {
+      console.log(user);
+      this.isLoginError = false;
+      this.router.navigate(['/home']);
+    }).catch((res: any) => {
+      this.isLoginError = true;
+    });
 
   }
-  
+
 
 }

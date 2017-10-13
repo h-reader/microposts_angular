@@ -1,22 +1,17 @@
 <mat-card>
   <mat-card-title>ログイン</mat-card-title>
   <mat-card-content>
-    <form [formGroup]="form">
+    <form #loginForm="ngForm" >
       <mat-form-field>
-        <input type="email" matInput placeholder="メースアドレス" formControlName="email" >
-        <mat-error *ngIf="formErrors.email">
-          {{ formErrors.email }}
-        </mat-error>
+        <input type="email" matInput placeholder="メースアドレス" required name="email" ngModel >
       </mat-form-field>
       <br>
       <mat-form-field>
-          <input type="password" matInput placeholder="パスワード" formControlName="password">
-          <mat-error *ngIf="formErrors.password">
-            {{ formErrors.password }}
-          </mat-error>
+          <input type="password" matInput placeholder="パスワード" required name="password" ngModel>
       </mat-form-field>
       <br>
-      <button mat-raised-button color="primary" (click)="login();" >ログイン</button>
+      <button [disabled]="!loginForm.form.valid" mat-raised-button color="primary"
+        (click)="login(loginForm.value);" >ログイン</button>
       <mat-error *ngIf="isLoginError">
         メースアドレス、またはパスワードが違います。
       </mat-error>

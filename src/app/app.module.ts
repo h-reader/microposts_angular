@@ -1,5 +1,5 @@
 import { Injector, NgModule } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 import { MATERIAL_COMPATIBILITY_MODE, MatInputModule, MatButtonModule, MatIconModule, MatToolbarModule, MatCardModule } from '@angular/material';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -25,7 +25,7 @@ import { ServiceLocator } from './common/service-locator';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    ReactiveFormsModule,
+    FormsModule,
     BrowserAnimationsModule,
     HttpModule,
     MatInputModule,
