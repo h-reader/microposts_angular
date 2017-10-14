@@ -12,8 +12,8 @@
       <br>
       <button [disabled]="!loginForm.form.valid" mat-raised-button color="primary"
         (click)="login(loginForm.value);" >ログイン</button>
-      <mat-error *ngIf="isLoginError">
-        メースアドレス、またはパスワードが違います。
+      <mat-error *ngIf="loginErrorMessage">
+        {{loginErrorMessage}}
       </mat-error>
     </form>
   </mat-card-content>

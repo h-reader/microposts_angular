@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { Validators } from '@angular/forms';
 
-import { BaseComponent } from '../base/base.component';
 import { AuthService } from '../common/auth/auth.service';
 import { Router } from '@angular/router';
 import { User } from '../user/user';
 
+/**
+ * ログインコンポーネント
+ */
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -13,20 +15,20 @@ import { User } from '../user/user';
 })
 export class LoginComponent implements OnInit {
 
-  /** ログインの失敗字にTrue */
-  isLoginError: boolean;
+  /** ログインエラーメッセージ */
+  loginErrorMessage: string;
 
   constructor(private authService: AuthService, private router: Router) {
   }
 
   ngOnInit() {
-    this.isLoginError = false;
+    this.loginErrorMessage = null;
   }
 
   /**
-   * ログイン
+   * ログイン処理
    */
-  login(values: any) {
+  async login(values: any) {
 
     const body = JSON.stringify({
       'email': values.email,
@@ -34,13 +36,17 @@ export class LoginComponent implements OnInit {
     });
 
     // ログイン処理呼び出し
-    this.authService.logIn(body).then((user: User) => {
+    try {
+      const user = await this.authService.logIn(body);
+
       console.log(user);
-      this.isLoginError = false;
+      this.loginErrorMessage = null;
       this.router.navigate(['/home']);
-    }).catch((res: any) => {
-      this.isLoginError = true;
-    });
+
+    } catch(e) {
+      console.error(e);
+      this.loginErrorMessage = 'メースアドレス、またはパスワードが違います。';
+    }
 
   }
 
