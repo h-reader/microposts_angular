@@ -12,8 +12,9 @@ import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
 import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
+
 import { AuthService } from './common/auth/auth.service';
-import { ValidationService } from './common/validation/validation.service';
+import { MessageService } from './common/message/message.service';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,7 @@ import { ValidationService } from './common/validation/validation.service';
   ],
   providers: [
     AuthService,
-    ValidationService,
+    MessageService,
     { provide: MATERIAL_COMPATIBILITY_MODE, useValue: true },
   ],
   bootstrap: [AppComponent]

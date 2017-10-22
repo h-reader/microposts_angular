@@ -4,6 +4,7 @@ import { Validators } from '@angular/forms';
 import { AuthService } from '../common/auth/auth.service';
 import { Router } from '@angular/router';
 import { User } from '../user/user';
+import { MessageService, MessageKey } from '../common/message/message.service';
 
 /**
  * ログインコンポーネント
@@ -18,7 +19,7 @@ export class LoginComponent implements OnInit {
   /** ログインエラーメッセージ */
   loginErrorMessage: string;
 
-  constructor(private authService: AuthService, private router: Router) {
+  constructor(private authService: AuthService, private router: Router, private messageService: MessageService) {
   }
 
   ngOnInit() {
@@ -45,7 +46,7 @@ export class LoginComponent implements OnInit {
 
     } catch(e) {
       console.error(e);
-      this.loginErrorMessage = 'メースアドレス、またはパスワードが違います。';
+      this.loginErrorMessage = this.messageService.getMessage(MessageKey.loginError);
     }
 
   }
