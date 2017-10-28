@@ -9,10 +9,10 @@ import { User } from '../../user/user';
 @Injectable()
 export class AuthService {
 
-  private ACESS_TOKEN_KEY: string = 'access-token';
-  private UID_KEY: string = 'uid';
-  private CLIENT_KEY: string = 'client';
-  
+  private ACESS_TOKEN_KEY = 'access-token';
+  private UID_KEY= 'uid';
+  private CLIENT_KEY= 'client';
+
   constructor(@Inject(PLATFORM_ID) private platformId: Object, private http: Http) {}
 
   /**
@@ -100,7 +100,7 @@ export class AuthService {
       this.setClient(response.headers.get('client'));
 
       this.printAuthInfo();
-      
+
       // ユーザ情報を返却
       return response.json().data as User;
     })
@@ -115,6 +115,28 @@ export class AuthService {
     this.printAuthInfo();
   }
 
+  /**
+   * ユーザの新規登録
+   * @param body 登録ユーザ情報
+   */
+  signup(body: any): Promise<User> {
+    const headers = new Headers({'Content-Type': 'application/json'});
+    const options = new RequestOptions({headers: headers});
+    return this.http.post(environment.API_URL + '/auth', body, options)
+    .toPromise().then(response => {
+      // 認証情報を保存
+      this.setToken(response.headers.get('access-token'));
+      this.setUid(response.headers.get('uid'));
+      this.setClient(response.headers.get('client'));
+
+      this.printAuthInfo();
+
+      // ユーザ情報を返却
+      return response.json().data as User;
+    })
+    .catch(this.handleError);
+  }
+
   private clearAuthInfo() {
     localStorage.removeItem(this.ACESS_TOKEN_KEY);
     localStorage.removeItem(this.UID_KEY);
@@ -127,9 +149,9 @@ export class AuthService {
   }
 
   private printAuthInfo() {
-    console.log("token : " + this.getToken());
-    console.log("uid : " + this.getUid());
-    console.log("client : " + this.getClient());
+    console.log('token : ' + this.getToken());
+    console.log('uid : ' + this.getUid());
+    console.log('client : ' + this.getClient());
   }
 
 }

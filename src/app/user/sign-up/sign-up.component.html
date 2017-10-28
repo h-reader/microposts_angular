@@ -1,0 +1,28 @@
+<mat-card>
+  <mat-card-title>ユーザ登録</mat-card-title>
+  <mat-card-content>
+    <form #signupForm="ngForm" >
+      <mat-form-field>
+        <input type="email" matInput placeholder="メースアドレス" required name="email" ngModel >
+      </mat-form-field>
+      <br>
+      <mat-form-field>
+          <input type="password" matInput placeholder="パスワード" required name="password" ngModel>
+      </mat-form-field>
+      <br>
+      <mat-form-field>
+        <input type="password" matInput placeholder="パスワード(確認)" required name="password_confirm" ngModel>
+      </mat-form-field>
+      <br>
+      <mat-form-field>
+        <input type="text" matInput placeholder="アカウント名" required name="name" ngModel >
+      </mat-form-field>
+      <br>
+      <button [disabled]="!signupForm.form.valid" mat-raised-button color="primary"
+        (click)="entry(signupForm.value);" >登録</button>
+      <mat-error *ngIf="signupErrorMessage">
+        {{signupErrorMessage}}
+      </mat-error>
+    </form>
+  </mat-card-content>
+</mat-card>

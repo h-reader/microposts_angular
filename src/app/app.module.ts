@@ -15,6 +15,7 @@ import { HomeComponent } from './home/home.component';
 
 import { AuthService } from './common/auth/auth.service';
 import { MessageService } from './common/message/message.service';
+import { SignUpComponent } from './user/sign-up/sign-up.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { MessageService } from './common/message/message.service';
     HeaderComponent,
     LoginComponent,
     HomeComponent,
+    SignUpComponent,
   ],
   imports: [
     BrowserModule,

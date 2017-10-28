@@ -44,12 +44,18 @@ export class LoginComponent implements OnInit {
       this.loginErrorMessage = null;
       this.router.navigate(['/home']);
 
-    } catch(e) {
+    } catch (e) {
       console.error(e);
       this.loginErrorMessage = this.messageService.getMessage(MessageKey.loginError);
     }
 
   }
 
+  /**
+   * ユーザの新規登録画面へ遷移
+   */
+  moveSignUp() {
+    this.router.navigate(['/sign_up']);
+  }
 
 }
