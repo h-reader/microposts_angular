@@ -6,6 +6,8 @@ import { Injectable } from '@angular/core';
 @Injectable()
 export class MessageService {
 
+  private MAX_EXT_STR_COUNT = 1;
+
   constructor() { }
 
   /**
@@ -13,16 +15,18 @@ export class MessageService {
    * @param messageKey メッセージキー(MessageKeyクラスのパラメータを利用)
    * @param extStr 置換文字列
    */
-  getMessage(messageKey: string, extStr?: any): string {
+  getMessage(messageKey: string, extStr?: string[]): string {
 
-    var min = extStr && extStr.min ? extStr.min : '';
-    var max = extStr && extStr.max ? extStr.max : '';
+    if(!extStr) extStr = []
+    for(let i=0; i<this.MAX_EXT_STR_COUNT; i++) {
+      if(!extStr[i]) extStr.push('');
+    }
 
     var messageList = {
       requied: `値を入力して下さい`,
       email: `正しいメールアドレスを入力してください`,
-      minlength: `${min} 文字以上入力してください`,
-      maxlength: `${max} 文字以内で入力してください`,
+      minlength: `${extStr[0]} 文字以上入力してください`,
+      maxlength: `${extStr[0]} 文字以内で入力してください`,
       loginError: `メースアドレス、またはパスワードが違います。`,
     }
 
@@ -37,6 +41,6 @@ export class MessageKey {
   static requied: string = 'requied';
   static email: string = 'email';
   static minlength: string = 'minlength';
+  static maxlength: string = 'maxlength';
   static loginError: string = 'loginError';
-
 }
