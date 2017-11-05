@@ -1,25 +1,48 @@
 <mat-card>
   <mat-card-title>ユーザ登録</mat-card-title>
   <mat-card-content>
-    <form #signupForm="ngForm" >
+    <form #formSignUp="ngForm">
       <mat-form-field>
-        <input type="email" matInput placeholder="メースアドレス" required name="email" ngModel >
+        <input matInput placeholder="メースアドレス" [(ngModel)]="user.email" name="email" #email="ngModel" required email>
+        <mat-error *ngIf="email.invalid && email.errors.required">
+          {{ errorMessages.required }}
+        </mat-error>
+        <mat-error *ngIf="email.invalid && email.errors.email">
+            {{ errorMessages.email }}
+        </mat-error>
       </mat-form-field>
       <br>
       <mat-form-field>
-          <input type="password" matInput placeholder="パスワード" required name="password" ngModel>
+        <input type="password" matInput placeholder="パスワード" [(ngModel)]="user.password" name="password" #password="ngModel" required minlength="8">
+        <mat-error *ngIf="password.invalid && password.errors.required">
+            {{ errorMessages.required }}
+        </mat-error>
+        <mat-error *ngIf="password.invalid && password.errors.minlength">
+            {{ errorMessages.passwordMinLength }}
+        </mat-error>
       </mat-form-field>
       <br>
       <mat-form-field>
-        <input type="password" matInput placeholder="パスワード(確認)" required name="password_confirm" ngModel>
+        <input type="password" matInput placeholder="パスワード(確認)" [(ngModel)]="user.passwordConfirm" name="passwordConfirm"  #passwordConfirm="ngModel" required minlength="8" pattern="password.value">
+        <mat-error *ngIf="passwordConfirm.invalid && passwordConfirm.errors.required">
+            {{ errorMessages.required }}
+        </mat-error>
+        <mat-error *ngIf="passwordConfirm.invalid && passwordConfirm.errors.minlength">
+            {{ errorMessages.passwordMinLength }}
+        </mat-error>
+        <mat-error *ngIf="passwordConfirm.invalid && passwordConfirm.errors.pattern">
+            abc
+        </mat-error>
       </mat-form-field>
       <br>
       <mat-form-field>
-        <input type="text" matInput placeholder="アカウント名" required name="name" ngModel >
+        <input type="text" matInput placeholder="アカウント名" [(ngModel)]="user.name" name="name" #name="ngModel" required >
+        <mat-error *ngIf="name.invalid && name.errors.required">
+            {{ errorMessages.required }}
+        </mat-error>
       </mat-form-field>
       <br>
-      <button [disabled]="!signupForm.form.valid" mat-raised-button color="primary"
-        (click)="entry(signupForm.value);" >登録</button>
+      <button mat-raised-button color="primary" [disabled]="formSignUp.invalid" (click)="entry();" >登録</button>
       <mat-error *ngIf="signupErrorMessage">
         {{signupErrorMessage}}
       </mat-error>
