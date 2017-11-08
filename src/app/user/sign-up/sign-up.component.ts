@@ -34,7 +34,7 @@ export class SignUpComponent implements OnInit {
 
   ngOnInit() {
     this.user = new SignUpInfo();
-
+    this.signupErrorMessage = null;
     this.errorMessages = {
       required: this.messageService.getMessage(MessageKey.requied),
       email: this.messageService.getMessage(MessageKey.email),
@@ -42,9 +42,16 @@ export class SignUpComponent implements OnInit {
     };
   }
 
+  /**
+   * サインアップ処理
+   */
   async entry() {
 
-    console.log(this.user);
+    this.signupErrorMessage = null;
+
+    if(!this.validate()) {
+      return;
+    }
 
     const body = JSON.stringify({
       'email': this.user.email,
@@ -67,13 +74,17 @@ export class SignUpComponent implements OnInit {
 
   }
 
-  private validate(values: any) {
+  /**
+   * サインアップ時のバリデート
+   */
+  private validate() {
 
-    if (values.password !== values.password_confirm) {
-
-      // TODO: メッセージ
+    if (this.user.password !== this.user.passwordConfirm) {
+      this.signupErrorMessage = this.messageService.getMessage(MessageKey.passwordDisagreementError);
+      return false;
     }
 
+    return true;
   }
 
 

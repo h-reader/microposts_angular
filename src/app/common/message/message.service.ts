@@ -28,6 +28,7 @@ export class MessageService {
       minlength: `${extStr[0]} 文字以上入力してください`,
       maxlength: `${extStr[0]} 文字以内で入力してください`,
       loginError: `メースアドレス、またはパスワードが違います。`,
+      passwordDisagreementError: `パスワードが一致しません。`,
     }
 
     return messageList[messageKey];
@@ -43,4 +44,5 @@ export class MessageKey {
   static minlength: string = 'minlength';
   static maxlength: string = 'maxlength';
   static loginError: string = 'loginError';
+  static passwordDisagreementError: string = 'passwordDisagreementError';
 }
