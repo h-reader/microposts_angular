@@ -12,8 +12,11 @@ export class AuthService {
   private ACESS_TOKEN_KEY = 'access-token';
   private UID_KEY= 'uid';
   private CLIENT_KEY= 'client';
+  private user: User;
 
-  constructor(@Inject(PLATFORM_ID) private platformId: Object, private http: Http) {}
+  constructor(@Inject(PLATFORM_ID) private platformId: Object, private http: Http) {
+    this.user = null;
+  }
 
   /**
    * ローカルストレージに保存してあるtoken情報を取得する
@@ -85,6 +88,13 @@ export class AuthService {
     return this.getToken() != null && this.getUid() != null && this.getClient() != null;
   }
 
+  getUser(): User {
+    if(this.isLogin()) {
+      return this.user;
+    }
+    return null;
+  }
+
   /**
    * ログインする
    * @param body ログイン情報（メールアドレス、パスワード）
@@ -92,7 +102,7 @@ export class AuthService {
   logIn(body: any): Promise<User> {
     const headers = new Headers({'Content-Type': 'application/json'});
     const options = new RequestOptions({headers: headers});
-    return this.http.post(environment.API_URL + '/auth/sign_in', body, options)
+    return this.http.post(environment.API_URL + '/api/auth/sign_in', body, options)
     .toPromise().then(response => {
       // 認証情報を保存
       this.setToken(response.headers.get('access-token'));
@@ -102,7 +112,8 @@ export class AuthService {
       this.printAuthInfo();
 
       // ユーザ情報を返却
-      return response.json().data as User;
+      this.user = response.json().data as User;
+      return this.user;
     })
     .catch(this.handleError);
   }
@@ -122,7 +133,7 @@ export class AuthService {
   signup(body: any): Promise<User> {
     const headers = new Headers({'Content-Type': 'application/json'});
     const options = new RequestOptions({headers: headers});
-    return this.http.post(environment.API_URL + '/auth', body, options)
+    return this.http.post(environment.API_URL + '/api/auth', body, options)
     .toPromise().then(response => {
       // 認証情報を保存
       this.setToken(response.headers.get('access-token'));
@@ -141,6 +152,7 @@ export class AuthService {
     localStorage.removeItem(this.ACESS_TOKEN_KEY);
     localStorage.removeItem(this.UID_KEY);
     localStorage.removeItem(this.CLIENT_KEY);
+    this.user = null;
   }
 
   private handleError(error: any): Promise<any> {

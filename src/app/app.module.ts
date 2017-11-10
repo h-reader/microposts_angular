@@ -12,10 +12,13 @@ import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
 import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
+import { MicropostEntryComponent } from './micropost-entry/micropost-entry.component';
 
 import { AuthService } from './common/auth/auth.service';
 import { MessageService } from './common/message/message.service';
 import { SignUpComponent } from './user/sign-up/sign-up.component';
+import { MicropostService } from './micropost/micropost.service';
+
 
 @NgModule({
   declarations: [
@@ -24,6 +27,7 @@ import { SignUpComponent } from './user/sign-up/sign-up.component';
     LoginComponent,
     HomeComponent,
     SignUpComponent,
+    MicropostEntryComponent,
   ],
   imports: [
     BrowserModule,
@@ -40,6 +44,7 @@ import { SignUpComponent } from './user/sign-up/sign-up.component';
   providers: [
     AuthService,
     MessageService,
+    MicropostService,
     { provide: MATERIAL_COMPATIBILITY_MODE, useValue: true },
   ],
   bootstrap: [AppComponent]

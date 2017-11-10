@@ -1,0 +1,9 @@
+<p>{{loginUser.name}}</p>
+<p>
+  <mat-form-field>
+    <textarea matInput placeholder="つぶやき" [(ngModel)]="post.content" name="content" #content="ngModel">
+    </textarea>
+  </mat-form-field>
+  <br>
+  <button mat-raised-button color="primary" (click)="execMicropost(content.value)" >つぶやく</button>
+</p>
