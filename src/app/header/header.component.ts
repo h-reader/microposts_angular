@@ -23,6 +23,9 @@ export class HeaderComponent implements OnInit {
     return this.authService.isLogin();
   }
 
+  /**
+   * ログインボタン押下時、ログイン画面に遷移
+   */
   login() {
     this.router.navigate(['/login']);
   }
