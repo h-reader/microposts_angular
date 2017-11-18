@@ -102,7 +102,7 @@ export class AuthService {
   logIn(body: any): Promise<User> {
     const headers = new Headers({'Content-Type': 'application/json'});
     const options = new RequestOptions({headers: headers});
-    return this.http.post(environment.API_URL + '/api/auth/sign_in', body, options)
+    return this.http.post(environment.API_URL + '/auth/sign_in', body, options)
     .toPromise().then(response => {
       // 認証情報を保存
       this.setToken(response.headers.get('access-token'));
@@ -133,7 +133,7 @@ export class AuthService {
   signup(body: any): Promise<User> {
     const headers = new Headers({'Content-Type': 'application/json'});
     const options = new RequestOptions({headers: headers});
-    return this.http.post(environment.API_URL + '/api/auth', body, options)
+    return this.http.post(environment.API_URL + '/auth', body, options)
     .toPromise().then(response => {
       // 認証情報を保存
       this.setToken(response.headers.get('access-token'));

@@ -6,5 +6,5 @@
 export const environment = {
   production: false,
   APP_TITLE: 'つぶやきあぷり',
-  API_URL:  'http://localhost:3000',
+  API_URL:  'http://localhost:3000/api',
 };
