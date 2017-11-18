@@ -88,11 +88,20 @@ export class AuthService {
     return this.getToken() != null && this.getUid() != null && this.getClient() != null;
   }
 
-  getUser(): User {
-    if(this.isLogin()) {
-      return this.user;
+  /**
+   * ユーザ情報を取得する
+   */
+  async getUser(): Promise<User> {
+    if(this.isLogin() && !this.user) {
+      this.user = await this.validateUser();
     }
-    return null;
+
+    if(this.user) {
+      return this.user;
+    } else {
+      this.clearAuthInfo();
+      return null;
+    }
   }
 
   /**
@@ -146,6 +155,26 @@ export class AuthService {
       return response.json().data as User;
     })
     .catch(this.handleError);
+  }
+
+  /**
+   * tokenからユーザ情報を取得する
+   */
+  private validateUser(): Promise<User> {
+    const headers = new Headers({
+      'Content-Type': 'application/json',
+      'access-token': this.getToken(),
+      'uid': this.getUid(),
+      'client': this.getClient(),
+    });
+    const options = new RequestOptions({headers: headers});
+    console.log(headers);
+    return this.http.get(environment.API_URL + '/auth/validate_token', options)
+      .toPromise().then(response => {
+        return response.json().data as User;
+      })
+      .catch(this.handleError);
+
   }
 
   private clearAuthInfo() {

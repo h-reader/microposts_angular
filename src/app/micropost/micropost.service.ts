@@ -17,9 +17,10 @@ export class MicropostService {
   postMicropost(body: any): Promise<boolean> {
     const headers = new Headers({'Content-Type': 'application/json'});
     const options = new RequestOptions({headers: headers});
+    console.log(body);
     return this.http.post(environment.API_URL + '/microposts', body, options)
     .toPromise().then(response => {
-      console.log(response.json().data);
+      console.log(response.json());
       return true;
     })
     .catch();

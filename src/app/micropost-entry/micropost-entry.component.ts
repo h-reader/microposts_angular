@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { User } from '../user/user';
 
 import { AuthService } from '../common/auth/auth.service';
@@ -16,12 +17,10 @@ export class MicropostEntryComponent implements OnInit {
   loginUser: User;
   post: Micropost;
 
-  constructor(private authService: AuthService, private micropostService: MicropostService) { }
+  constructor(private authService: AuthService, private micropostService: MicropostService, private router: Router) { }
 
   ngOnInit() {
-    this.loginUser = this.authService.getUser();
-    this.post = new Micropost();
-    this.post.userId = this.loginUser.id;
+    this.init();
   }
 
   async execMicropost() {
@@ -37,5 +36,16 @@ export class MicropostEntryComponent implements OnInit {
 
     const ret = await this.micropostService.postMicropost(body);
     console.log(ret);
+  }
+
+  private async init() {
+    this.post = new Micropost();
+    this.loginUser = new User();
+    this.loginUser = await this.authService.getUser();
+    if(!this.loginUser) {
+      this.router.navigate(['/login']);
+    } else {
+      this.post.userId = this.loginUser.id;
+    }
   }
 }
