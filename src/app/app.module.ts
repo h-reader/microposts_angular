@@ -18,6 +18,7 @@ import { AuthService } from './common/auth/auth.service';
 import { MessageService } from './common/message/message.service';
 import { SignUpComponent } from './user/sign-up/sign-up.component';
 import { MicropostService } from './micropost/micropost.service';
+import { MicropostListComponent } from './micropost-list/micropost-list.component';
 
 
 @NgModule({
@@ -28,6 +29,7 @@ import { MicropostService } from './micropost/micropost.service';
     HomeComponent,
     SignUpComponent,
     MicropostEntryComponent,
+    MicropostListComponent,
   ],
   imports: [
     BrowserModule,

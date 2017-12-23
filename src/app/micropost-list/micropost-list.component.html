@@ -1,0 +1,11 @@
+<mat-list>
+
+  <mat-list-item *ngFor="let micropost of microposts">
+    <p class="content">{{micropost.content}}</p>
+    <p class="footer">
+      {{micropost.created_at | date:'yyyy/MM/dd HH:mm:ss'}}
+      <button mat-button>delete</button>
+    </p>
+  </mat-list-item>
+
+</mat-list>
