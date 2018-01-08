@@ -35,11 +35,11 @@ export class MicropostService {
   getMicropost(userId: Number): Promise<Micropost[]> {
     const headers = new Headers({'Content-Type': 'application/json'});
     const options = new RequestOptions({headers: headers});
-    return this.http.get(environment.API_URL + this.MICROPOST_URL, options)
+    return this.http.get(environment.API_URL + '/user/' + userId.toString() + this.MICROPOST_URL, options)
     .toPromise().then(response => {
       console.log(response.json());
-      return response.json() as Micropost[]
-    })
+      return response.json() as Micropost[];
+    });
   }
 
 }
