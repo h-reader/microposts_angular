@@ -5,6 +5,6 @@
 
 export const environment = {
   production: false,
-  APP_TITLE: 'つぶやきあぷり',
+  APP_TITLE: 'microposts',
   API_URL:  'http://localhost:3000/api',
 };

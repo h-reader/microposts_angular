@@ -92,11 +92,11 @@ export class AuthService {
    * ユーザ情報を取得する
    */
   async getUser(): Promise<User> {
-    if(this.isLogin() && !this.user) {
+    if (this.isLogin() && !this.user) {
       this.user = await this.validateUser();
     }
 
-    if(this.user) {
+    if (this.user) {
       return this.user;
     } else {
       this.clearAuthInfo();
@@ -114,11 +114,7 @@ export class AuthService {
     return this.http.post(environment.API_URL + '/auth/sign_in', body, options)
     .toPromise().then(response => {
       // 認証情報を保存
-      this.setToken(response.headers.get('access-token'));
-      this.setUid(response.headers.get('uid'));
-      this.setClient(response.headers.get('client'));
-
-      this.printAuthInfo();
+      this.saveAuthInfo(response.headers);
 
       // ユーザ情報を返却
       this.user = response.json().data as User;
@@ -171,12 +167,26 @@ export class AuthService {
     console.log(headers);
     return this.http.get(environment.API_URL + '/auth/validate_token', options)
       .toPromise().then(response => {
+        this.saveAuthInfo(response.headers);
         return response.json().data as User;
       })
       .catch(this.handleError);
 
   }
 
+  /**
+   * 認証情報を保存する
+   * @param headers Httpヘッダ
+   */
+  private saveAuthInfo(headers: Headers) {
+      this.setToken(headers.get('access-token'));
+      this.setUid(headers.get('uid'));
+      this.setClient(headers.get('client'));
+  }
+
+  /**
+   * 認証情報をクリアする
+   */
   private clearAuthInfo() {
     localStorage.removeItem(this.ACESS_TOKEN_KEY);
     localStorage.removeItem(this.UID_KEY);

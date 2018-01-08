@@ -8,16 +8,18 @@ import { HttpModule } from '@angular/http';
 import 'hammerjs';
 
 import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
-import { HeaderComponent } from './header/header.component';
-import { LoginComponent } from './login/login.component';
-import { HomeComponent } from './home/home.component';
-import { MicropostEntryComponent } from './micropost-entry/micropost-entry.component';
 
 import { AuthService } from './common/auth/auth.service';
 import { MessageService } from './common/message/message.service';
-import { SignUpComponent } from './user/sign-up/sign-up.component';
 import { MicropostService } from './micropost/micropost.service';
+import { ComponentService } from './common/component/component.service';
+
+import { AppComponent } from './app.component';
+import { HeaderComponent } from './header/header.component';
+import { LoginComponent } from './login/login.component';
+import { SignUpComponent } from './user/sign-up/sign-up.component';
+import { HomeComponent } from './home/home.component';
+import { MicropostEntryComponent } from './micropost-entry/micropost-entry.component';
 import { MicropostListComponent } from './micropost-list/micropost-list.component';
 
 
@@ -47,6 +49,7 @@ import { MicropostListComponent } from './micropost-list/micropost-list.componen
     AuthService,
     MessageService,
     MicropostService,
+    ComponentService,
     { provide: MATERIAL_COMPATIBILITY_MODE, useValue: true },
   ],
   bootstrap: [AppComponent]
