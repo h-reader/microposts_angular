@@ -141,11 +141,7 @@ export class AuthService {
     return this.http.post(environment.API_URL + '/auth', body, options)
     .toPromise().then(response => {
       // 認証情報を保存
-      this.setToken(response.headers.get('access-token'));
-      this.setUid(response.headers.get('uid'));
-      this.setClient(response.headers.get('client'));
-
-      this.printAuthInfo();
+      this.saveAuthInfo(response.headers);
 
       // ユーザ情報を返却
       return response.json().data as User;
