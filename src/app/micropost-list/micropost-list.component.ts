@@ -12,7 +12,7 @@ import { getDefaultService } from 'selenium-webdriver/chrome';
 })
 export class MicropostListComponent implements OnInit {
 
-  microposts : Micropost[];
+  microposts: Micropost[];
 
 
   constructor(private microPostService: MicropostService, private authService: AuthService) { }
@@ -24,9 +24,9 @@ export class MicropostListComponent implements OnInit {
 
   private async initMicropostData() {
 
-    var user = await this.authService.getUser();
+    const user = await this.authService.getUser();
 
-    if(user) {
+    if (user) {
       this.microposts = await this.microPostService.getMicropost(user.id);
       console.log('first create_at :');
       console.log(this.microposts[0].created_at);
