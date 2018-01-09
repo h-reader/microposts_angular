@@ -128,7 +128,6 @@ export class AuthService {
    */
   logout() {
     this.clearAuthInfo();
-    this.printAuthInfo();
   }
 
   /**
@@ -160,7 +159,6 @@ export class AuthService {
       'client': this.getClient(),
     });
     const options = new RequestOptions({headers: headers});
-    console.log(headers);
     return this.http.get(environment.API_URL + '/auth/validate_token', options)
       .toPromise().then(response => {
         this.saveAuthInfo(response.headers);
