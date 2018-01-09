@@ -49,4 +49,20 @@ export class MicropostService {
     });
   }
 
+  /**
+   * つぶやきを削除する
+   * @param id 削除対象のMicropostId
+   */
+  deleteMicropost(id: Number): Promise<boolean> {
+    const headers = new Headers({'Content-Type': 'application/json'});
+    const options = new RequestOptions({headers: headers});
+
+    return this.http.delete(environment.API_URL + this.MICROPOST_URL + '/' + id.toString(), options)
+    .toPromise().then(response => {
+      console.log(response.json());
+      this.editMicropost$.next(true);
+      return true;
+    });
+
+  }
 }

@@ -22,6 +22,10 @@ export class MicropostListComponent implements OnInit {
     this.microPostService.editMicropost$.subscribe(() => { this.initMicropostData(); });
   }
 
+  async deletePost(id: number) {
+    await this.microPostService.deleteMicropost(id);
+  }
+
   private async initMicropostData() {
 
     const user = await this.authService.getUser();

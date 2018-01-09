@@ -4,7 +4,7 @@
     <p class="content">{{micropost.content}}</p>
     <p class="footer">
       {{micropost.created_at | date:'yyyy/MM/dd HH:mm:ss'}}
-      <button mat-button>delete</button>
+      <button mat-button (click)="deletePost(micropost.id)">delete</button>
     </p>
   </mat-list-item>
 
