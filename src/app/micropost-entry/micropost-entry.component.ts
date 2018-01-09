@@ -24,10 +24,9 @@ export class MicropostEntryComponent implements OnInit {
   }
 
   async execMicropost() {
-    if(!this.post.content) {
+    if (!this.post.content) {
       return;
     }
-    console.log(this.post.content);
 
     const body = JSON.stringify({
       'content': this.post.content,
@@ -36,13 +35,14 @@ export class MicropostEntryComponent implements OnInit {
 
     const ret = await this.micropostService.postMicropost(body);
     console.log(ret);
+    this.post.content = '';
   }
 
   private async init() {
     this.post = new Micropost();
     this.loginUser = new User();
     this.loginUser = await this.authService.getUser();
-    if(!this.loginUser) {
+    if (!this.loginUser) {
       this.router.navigate(['/login']);
     } else {
       this.post.userId = this.loginUser.id;

@@ -18,8 +18,8 @@ export class MicropostListComponent implements OnInit {
   constructor(private microPostService: MicropostService, private authService: AuthService) { }
 
   ngOnInit() {
-
     this.initMicropostData();
+    this.microPostService.editMicropost$.subscribe(() => { this.initMicropostData(); });
   }
 
   private async initMicropostData() {

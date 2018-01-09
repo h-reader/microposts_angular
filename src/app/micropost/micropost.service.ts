@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers, RequestOptions } from '@angular/http';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 import { environment } from '../../environments/environment';
 import { Micropost } from './micropost';
@@ -8,9 +9,14 @@ import { Micropost } from './micropost';
 @Injectable()
 export class MicropostService {
 
-  constructor(private http: Http) { }
-
   private MICROPOST_URL = '/microposts';
+
+  /** つぶやき変更通知 */
+  editMicropost$: BehaviorSubject<boolean>;
+
+  constructor(private http: Http) {
+    this.editMicropost$ = new BehaviorSubject<boolean>(false);
+  }
 
   /**
    * つぶやきを投稿する
@@ -23,6 +29,7 @@ export class MicropostService {
     return this.http.post(environment.API_URL + this.MICROPOST_URL, body, options)
     .toPromise().then(response => {
       console.log(response.json());
+      this.editMicropost$.next(true);
       return true;
     })
     .catch();
