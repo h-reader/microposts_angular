@@ -1,3 +1,16 @@
 .container {
   display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+
+  app-micropost-entry {
+    margin: 10px;
+    width: 400px;
+  }
+
+  app-micropost-list {
+    margin: 10px;
+    width: 600px;
+  }
 }
+
