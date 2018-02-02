@@ -3,7 +3,6 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../common/auth/auth.service';
 import { Micropost } from '../micropost/micropost';
 import { MicropostService } from '../micropost/micropost.service';
-import { getDefaultService } from 'selenium-webdriver/chrome';
 
 @Component({
   selector: 'app-micropost-list',
