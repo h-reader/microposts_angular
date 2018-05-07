@@ -5,7 +5,6 @@ import { User } from '../user/user';
 import { AuthService } from '../common/auth/auth.service';
 import { MicropostService} from '../micropost/micropost.service';
 import { Micropost } from '../micropost/micropost';
-import { post } from 'selenium-webdriver/http';
 
 @Component({
   selector: 'app-micropost-entry',
